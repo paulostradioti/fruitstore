@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Asaitec.FruitShop.App": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\strad\\Desktop\\products.txt C:\\Users\\strad\\Desktop\\order.txt "
+    }
+  }
+}
