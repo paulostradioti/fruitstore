@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Asaitec.FruitShop.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Asaitec.FruitShop.Core.Entities;
 
 namespace Asaitec.FruitShop.Core.Services.Receipt
 {
@@ -24,8 +23,10 @@ namespace Asaitec.FruitShop.Core.Services.Receipt
             IEnumerable<KeyValuePair<string, decimal>> products)
         {
             var orderSummary = new OrderSummary();
+            LogUnknownItems(order, products);
 
             var productList = products.ToDictionary(v => v.Key, v => v.Value);
+
 
             var validItemsOnly = order.Where(listItem => products.Any(product => product.Key.Equals(listItem.Key)));
 
@@ -39,6 +40,16 @@ namespace Asaitec.FruitShop.Core.Services.Receipt
             }
 
             return orderSummary.ToReceipt();
+        }
+
+        private void LogUnknownItems(IEnumerable<KeyValuePair<string, int>> order, IEnumerable<KeyValuePair<string, decimal>> products)
+        {
+            var itemsNotInShop = order.Where(listItem => !products.Any(product => product.Key.Equals(listItem.Key)))
+                .Select(x => x.Key);
+
+            Console.WriteLine(
+                "The following Items were not found in our products catalog and, therefore, will bi disregarded: [{0}]",
+                string.Join(", ", itemsNotInShop));
         }
     }
 }

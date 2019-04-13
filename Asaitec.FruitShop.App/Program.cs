@@ -39,6 +39,8 @@ namespace Asaitec.FruitShop.App
 
             var receipt = shop.ProcessOrder(orderFile);
 
+            Console.WriteLine(receipt);
+
         }
     }
 }

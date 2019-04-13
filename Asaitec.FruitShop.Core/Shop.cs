@@ -34,20 +34,7 @@ namespace Asaitec.FruitShop.Core
             var orderEntries = _orderLoader.LoadFromFile(orderFile);
             var receipt = _receiptGenerator.GenerateFromOrder(orderEntries, Products);
 
-
-            LogUnknownItems(orderEntries);
-
             return receipt;
-        }
-
-        private void LogUnknownItems(IEnumerable<KeyValuePair<string, int>> order)
-        {
-            var itemsNotInShop = order.Where(listItem => !Products.Any(product => product.Key.Equals(listItem.Key)))
-                .Select(x => x.Key);
-
-            Console.WriteLine(
-                "The following Items were not found in our products catalog and, therefore, will bi disregarded: [{0}]",
-                string.Join(", ", itemsNotInShop));
         }
     }
 }
