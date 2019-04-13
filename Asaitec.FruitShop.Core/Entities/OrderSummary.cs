@@ -8,7 +8,11 @@ namespace Asaitec.FruitShop.Core.Entities
     public class OrderSummary
     {
         public List<OrderEntry> Items { get; private set; }
-        
+
+        public OrderSummary()
+        {
+            Items = new List<OrderEntry>();
+        }
         //TODO move to extension method
         public string ToReceipt()
         {
@@ -19,7 +23,7 @@ namespace Asaitec.FruitShop.Core.Entities
             Items.ToList().ForEach(item =>
             {
                 var line =
-                    $"{item.ProductName.PadRight(10)}{item.Quantity.ToString().PadLeft(5)}{(item.Quantity * item.Price).ToString().PadLeft(5)}";
+                    $"{item.ProductName.PadRight(10)}{item.Quantity.ToString().PadLeft(10)}{(item.Quantity * item.Price).ToString().PadLeft(10)}";
 
                 receiptText.AppendLine(line);
             });
@@ -29,9 +33,9 @@ namespace Asaitec.FruitShop.Core.Entities
 
         private void AddHeader(StringBuilder receiptText)
         {
-            var header = string.Empty.PadLeft(20, '-');
+            var header = string.Empty.PadLeft(30, '-');
             receiptText.AppendLine(header);
-            receiptText.AppendLine("Fruit Store");
+            receiptText.AppendLine("Fruit Store"); //TODO padright
             receiptText.AppendLine(header);
         }
 
